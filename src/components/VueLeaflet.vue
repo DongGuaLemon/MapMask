@@ -4,7 +4,7 @@
     <div class="vue-leaflet">
       <div class="title">
         <h2>(台東縣)實名制口罩存量地圖</h2>
-        <h5>口罩存量更新時間:{{mapdata[0]["source_time"]}}</h5>
+        <h5>口罩存量更新時間:{{sourcetime}}</h5>
       </div>
       <l-map style="width: 100%; height: 500px;z-index:10" :zoom="zoom" :center="center">
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
@@ -83,7 +83,8 @@ export default {
         "http://a.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoiem9uZ3dlaSIsImEiOiJjazY4eTZwOHMwYTRvM21xanZ1bzc4cXUxIn0.NQC4NVICfb0iPfKi-BPWlQ",
       attribution:
         'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      staticAnchor: [24, 32]
+      staticAnchor: [24, 32],
+      sourcetime:''
     };
   },
   methods: {
@@ -100,21 +101,23 @@ export default {
       var vm = this;
       axios({
         method: "POST",
-        url: `http://172.16.7.100:3000/maskstock`,
+        url: `http://172.16.5.17:3000/maskstock`,
         responseType: "json",
         headers: {
           "Content-type": "application/json"
         }
       })
         .then(response => {
+            console.log(response.data)
           vm.mapdata = response.data;
+          vm.sourcetime = response.data[0]["source_time"]
         })
         .catch(function(error) {
           console.log(error);
         });
     }
   },
-  mounted() {
+  created() {
     this.map();
   }
 };
