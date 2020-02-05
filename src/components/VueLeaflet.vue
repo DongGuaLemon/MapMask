@@ -9,7 +9,11 @@
       <l-map style="width: 100%; height: 500px;z-index:10" :zoom="zoom" :center="center">
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
         <vmarkercluster>
-          <l-marker v-for="(item,index) in mapdata" :lat-lng="coordinate(item.Lat,item.Lng)" :key="index">
+          <l-marker
+            v-for="(item,index) in mapdata"
+            :lat-lng="coordinate(item.Lat,item.Lng)"
+            :key="index"
+          >
             <l-popup :content="markinfo" />
             <l-icon :icon-anchor="staticAnchor" class-name="someExtraClass">
               <div style="width:50px">
@@ -58,7 +62,7 @@ import { LMap, LTileLayer, LMarker, LPopup, LIcon } from "vue2-leaflet";
 import { latLng, icon } from "leaflet";
 import mark from "../assets/mark.png";
 import alert from "./alert";
-import json from '../assets/store.json'
+import json from "../assets/store.json";
 export default {
   name: "VueLeaflet",
   components: {
@@ -75,7 +79,8 @@ export default {
       mapdata: [],
       zoom: 12,
       center: L.latLng(22.7606107, 121.1428803),
-      url: "http://a.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoiem9uZ3dlaSIsImEiOiJjazY4eTZwOHMwYTRvM21xanZ1bzc4cXUxIn0.NQC4NVICfb0iPfKi-BPWlQ",
+      url:
+        "http://a.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoiem9uZ3dlaSIsImEiOiJjazY4eTZwOHMwYTRvM21xanZ1bzc4cXUxIn0.NQC4NVICfb0iPfKi-BPWlQ",
       attribution:
         'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       staticAnchor: [26, 37],
@@ -85,20 +90,20 @@ export default {
         電話:089-310659`
     };
   },
-  methods:{
-      coordinate(xLat,yLng){
-          return [xLat,yLng]
-      },
-      map(){
-          fetch('./store.json')
+  methods: {
+    coordinate(xLat, yLng) {
+      return [xLat, yLng];
+    },
+    map() {
+      fetch("./store.json")
         .then(res => res.json())
         .then(jsonData => {
-          this.mapdata = jsonData
-        })
-      }
+          this.mapdata = jsonData;
+        });
+    }
   },
-  mounted(){
-      this.map()
+  mounted() {
+    this.map();
   }
 };
 </script>
