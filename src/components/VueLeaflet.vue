@@ -72,17 +72,12 @@ export default {
   },
   data() {
     return {
-      mapdata: json,
+      mapdata: [],
       zoom: 12,
       center: L.latLng(22.7606107, 121.1428803),
-      url: "https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoiem9uZ3dlaSIsImEiOiJjazY4eTZwOHMwYTRvM21xanZ1bzc4cXUxIn0.NQC4NVICfb0iPfKi-BPWlQ",
+      url: "http://a.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoiem9uZ3dlaSIsImEiOiJjazY4eTZwOHMwYTRvM21xanZ1bzc4cXUxIn0.NQC4NVICfb0iPfKi-BPWlQ",
       attribution:
         'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      marker: [
-        [22.7606107, 121.1428803],
-        [22.754885, 121.151634]
-      ],
-      place: ["台東市區", "陳藥局"],
       staticAnchor: [26, 37],
       markinfo: `口罩數量:30<br />
         兒童口罩數量:25<br />
@@ -93,7 +88,17 @@ export default {
   methods:{
       coordinate(xLat,yLng){
           return [xLat,yLng]
+      },
+      map(){
+          fetch('./store.json')
+        .then(res => res.json())
+        .then(jsonData => {
+          this.mapdata = jsonData
+        })
       }
+  },
+  mounted(){
+      this.map()
   }
 };
 </script>
