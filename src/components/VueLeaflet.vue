@@ -1,0 +1,165 @@
+<template>
+  <div style="width:100%;min-height:100vh;">
+    <alert />
+    <div class="vue-leaflet">
+      <div class="title">
+        <h2>台東縣實名制口罩存量地圖</h2>
+        <h5>資料更新日期:2020/02/05 18:30</h5>
+      </div>
+      <l-map style="width: 100%; height: 500px;z-index:10" :zoom="zoom" :center="center">
+        <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+        <l-marker v-for="(item,index) in marker" :lat-lng="item" :key="index">
+          <l-popup :content="markinfo" />
+          <l-icon :icon-anchor="staticAnchor" class-name="someExtraClass">
+            <div style="width:50px">
+              <span>{{ place[index] }}</span>
+              <img src="../assets/mark.png" />
+            </div>
+          </l-icon>
+        </l-marker>
+      </l-map>
+      <div class="footerblock">
+        <div class="rightsick">
+          <h5>全國嚴重特殊傳染性肺炎本土病例及境外移入病例</h5>
+          <div class="sickmember">
+            <div class="check sick sickblock">
+              <span>10</span>人
+              <br />確診
+            </div>
+            <div class="death sick sickblock">
+              <span>0</span>人
+              <br />死亡
+            </div>
+            <div class="update sick">
+              <span>2020/1/27</span>
+              <br />更新日期
+            </div>
+          </div>
+          <p>
+            資料來源:
+            <a
+              href="https://nidss.cdc.gov.tw/ch/Default.aspx"
+            >https://nidss.cdc.gov.tw/ch/Default.aspx</a>
+          </p>
+        </div>
+        <div class="sickimg">
+          <img src="../assets/logo.svg" height="130" alt="logo" />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { LMap, LTileLayer, LMarker, LPopup, LIcon } from "vue2-leaflet";
+import { latLng, icon } from "leaflet";
+import mark from "../assets/mark.png";
+import alert from "./alert";
+export default {
+  name: "VueLeaflet",
+  components: {
+    LMap,
+    LTileLayer,
+    LMarker,
+    LPopup,
+    LIcon,
+    alert
+  },
+  data() {
+    return {
+      zoom: 12,
+      center: L.latLng(22.7606107, 121.1428803),
+      url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      attribution:
+        'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      marker: [
+        [22.7606107, 121.1428803],
+        [22.754885, 121.151634]
+      ],
+      place: ["台東市區", "陳藥局"],
+      staticAnchor: [26, 37],
+      markinfo: `口罩數量:30<br />
+        兒童口罩數量:25<br />
+        地點:台東縣台東市光明路143號<br />
+        電話:089-310659`
+    };
+  }
+};
+</script>
+
+<style>
+.footerblock {
+  width: 100%;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+}
+.rightsick {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.title h2{
+    padding: 10px;
+}
+.title h5{
+    padding: 10px;
+}
+.rightsick p a {
+  font-size: 12px;
+}
+.rightsick h5 {
+  padding: 10px;
+}
+.sickmember {
+  margin-top: -15px;
+  display: flex;
+  justify-content: center;
+}
+.check span {
+  color: red;
+  font-weight: 800;
+  font-size: 25px;
+}
+.death span {
+  color: gray;
+  font-weight: 800;
+  font-size: 25px;
+}
+.update span {
+  color: darkcyan;
+  font-weight: 800;
+  font-size: 25px;
+}
+.sickblock {
+  height: 50px;
+  position: relative;
+  margin-left: 10px;
+}
+.sick {
+  height: 50px;
+  position: relative;
+  margin-left: 25px;
+  padding: 15px;
+}
+.check {
+  margin-left: 0px;
+}
+.sickblock::after {
+  content: "|";
+  position: absolute;
+  font-size: 25px;
+  top: 28%;
+  height: 50px;
+  margin-left: 25px;
+}
+@media screen and (min-width: 300px) and (max-width: 450px) {
+  .sickimg {
+    width: 100%;
+  }
+  .rightsick {
+    width: 100%;
+  }
+}
+</style>
