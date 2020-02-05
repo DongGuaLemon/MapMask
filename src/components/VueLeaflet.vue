@@ -4,20 +4,20 @@
     <div class="vue-leaflet">
       <div class="title">
         <h2>(台東縣)實名制口罩存量地圖</h2>
-        <h5>資料更新日期:2020/02/05 18:30</h5>
+        <h5>口罩存量更新時間:{{mapdata[0].source_time}}</h5>
       </div>
       <l-map style="width: 100%; height: 500px;z-index:10" :zoom="zoom" :center="center">
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
         <vmarkercluster>
           <l-marker
             v-for="(item,index) in mapdata"
-            :lat-lng="coordinate(item.Lat,item.Lng)"
+            :lat-lng="coordinate(item.lon,item.lat)"
             :key="index"
           >
-            <l-popup :content="markinfo" />
+            <l-popup :content="markinfo(item)" />
             <l-icon :icon-anchor="staticAnchor" class-name="someExtraClass">
               <div style="width:50px">
-                <span>{{ item.Name }}</span>
+                <span>{{ item.medical_name }}</span>
                 <img src="../assets/mark.png" />
               </div>
             </l-icon>
@@ -29,7 +29,7 @@
           <h5>全國嚴重特殊傳染性肺炎本土病例及境外移入病例</h5>
           <div class="sickmember">
             <div class="check sick sickblock">
-              <span>10</span>人
+              <span>11</span>人
               <br />確診
             </div>
             <div class="death sick sickblock">
@@ -37,7 +37,7 @@
               <br />死亡
             </div>
             <div class="update sick">
-              <span>2020/1/27</span>
+              <span>2020/02/3</span>
               <br />更新日期
             </div>
           </div>
@@ -62,7 +62,7 @@ import { LMap, LTileLayer, LMarker, LPopup, LIcon } from "vue2-leaflet";
 import { latLng, icon } from "leaflet";
 import mark from "../assets/mark.png";
 import alert from "./alert";
-import json from "../assets/store.json";
+import axios from "axios";
 export default {
   name: "VueLeaflet",
   components: {
@@ -83,22 +83,34 @@ export default {
         "http://a.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoiem9uZ3dlaSIsImEiOiJjazY4eTZwOHMwYTRvM21xanZ1bzc4cXUxIn0.NQC4NVICfb0iPfKi-BPWlQ",
       attribution:
         'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      staticAnchor: [26, 37],
-      markinfo: `口罩數量:30<br />
-        兒童口罩數量:25<br />
-        地點:台東縣台東市光明路143號<br />
-        電話:089-310659`
+      staticAnchor: [24, 32]
     };
   },
   methods: {
     coordinate(xLat, yLng) {
       return [xLat, yLng];
     },
+    markinfo(item){
+        return `成人口罩:${item.adult_mask}<br/>
+                兒童口罩:${item.child_mask}<br/>
+                地址:${item.address}<br/>
+                電話:${item.tel}<br/>`
+    },
     map() {
-      fetch("./store.json")
-        .then(res => res.json())
-        .then(jsonData => {
-          this.mapdata = jsonData;
+      var vm = this;
+      axios({
+        method: "POST",
+        url: `http://172.16.7.100:3000/maskstock`,
+        responseType: "json",
+        headers: {
+          "Content-type": "application/json"
+        }
+      })
+        .then(response => {
+          vm.mapdata = response.data;
+        })
+        .catch(function(error) {
+          console.log(error);
         });
     }
   },
