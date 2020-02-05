@@ -28,7 +28,6 @@ export default {
   },
   mounted() {
     let i = this.getRandom(2);
-    console.log(i)
     switch (i) {
       case 1:
         this.img = alert1;

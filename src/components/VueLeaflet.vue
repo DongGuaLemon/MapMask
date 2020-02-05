@@ -8,15 +8,17 @@
       </div>
       <l-map style="width: 100%; height: 500px;z-index:10" :zoom="zoom" :center="center">
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-        <l-marker v-for="(item,index) in marker" :lat-lng="item" :key="index">
-          <l-popup :content="markinfo" />
-          <l-icon :icon-anchor="staticAnchor" class-name="someExtraClass">
-            <div style="width:50px">
-              <span>{{ place[index] }}</span>
-              <img src="../assets/mark.png" />
-            </div>
-          </l-icon>
-        </l-marker>
+        <vmarkercluster>
+          <l-marker v-for="(item,index) in mapdata" :lat-lng="coordinate(item.Lat,item.Lng)" :key="index">
+            <l-popup :content="markinfo" />
+            <l-icon :icon-anchor="staticAnchor" class-name="someExtraClass">
+              <div style="width:50px">
+                <span>{{ item.Name }}</span>
+                <img src="../assets/mark.png" />
+              </div>
+            </l-icon>
+          </l-marker>
+        </vmarkercluster>
       </l-map>
       <div class="footerblock">
         <div class="rightsick">
@@ -51,10 +53,12 @@
 </template>
 
 <script>
+import vmarkercluster from "vue2-leaflet-markercluster";
 import { LMap, LTileLayer, LMarker, LPopup, LIcon } from "vue2-leaflet";
 import { latLng, icon } from "leaflet";
 import mark from "../assets/mark.png";
 import alert from "./alert";
+import json from '../assets/store.json'
 export default {
   name: "VueLeaflet",
   components: {
@@ -63,10 +67,12 @@ export default {
     LMarker,
     LPopup,
     LIcon,
+    vmarkercluster,
     alert
   },
   data() {
     return {
+      mapdata: json,
       zoom: 12,
       center: L.latLng(22.7606107, 121.1428803),
       url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -83,6 +89,11 @@ export default {
         地點:台東縣台東市光明路143號<br />
         電話:089-310659`
     };
+  },
+  methods:{
+      coordinate(xLat,yLng){
+          return [xLat,yLng]
+      }
   }
 };
 </script>
@@ -100,11 +111,11 @@ export default {
   flex-direction: column;
   align-items: center;
 }
-.title h2{
-    padding: 10px;
+.title h2 {
+  padding: 10px;
 }
-.title h5{
-    padding: 10px;
+.title h5 {
+  padding: 10px;
 }
 .rightsick p a {
   font-size: 12px;
