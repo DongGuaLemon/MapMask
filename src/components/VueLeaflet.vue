@@ -4,7 +4,7 @@
     <div class="vue-leaflet">
       <div class="title">
         <h2>(台東縣)實名制口罩存量地圖</h2>
-        <h5>口罩存量更新時間:{{mapdata[0].source_time}}</h5>
+        <h5>口罩存量更新時間:{{mapdata[0]["source_time"]}}</h5>
       </div>
       <l-map style="width: 100%; height: 500px;z-index:10" :zoom="zoom" :center="center">
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
