@@ -3,7 +3,7 @@
     <alert />
     <div class="vue-leaflet">
       <div class="title">
-        <h2>台東縣實名制口罩存量地圖</h2>
+        <h2>(台東縣)實名制口罩存量地圖</h2>
         <h5>資料更新日期:2020/02/05 18:30</h5>
       </div>
       <l-map style="width: 100%; height: 500px;z-index:10" :zoom="zoom" :center="center">
@@ -75,7 +75,7 @@ export default {
       mapdata: json,
       zoom: 12,
       center: L.latLng(22.7606107, 121.1428803),
-      url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      url: "https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoiem9uZ3dlaSIsImEiOiJjazY4eTZwOHMwYTRvM21xanZ1bzc4cXUxIn0.NQC4NVICfb0iPfKi-BPWlQ",
       attribution:
         'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       marker: [
