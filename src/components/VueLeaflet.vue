@@ -29,7 +29,7 @@
           <h5>全國嚴重特殊傳染性肺炎本土病例及境外移入病例</h5>
           <div class="sickmember">
             <div class="check sick sickblock">
-              <span>13</span>人
+              <span>16</span>人
               <br />確診
             </div>
             <div class="cure sick sickblock">
