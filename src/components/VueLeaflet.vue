@@ -29,15 +29,19 @@
           <h5>全國嚴重特殊傳染性肺炎本土病例及境外移入病例</h5>
           <div class="sickmember">
             <div class="check sick sickblock">
-              <span>11</span>人
+              <span>13</span>人
               <br />確診
+            </div>
+            <div class="cure sick sickblock">
+              <span>1</span>人
+              <br />治癒
             </div>
             <div class="death sick sickblock">
               <span>0</span>人
               <br />死亡
             </div>
             <div class="update sick">
-              <span>2020/02/3</span>
+              <span>2020/02/06</span>
               <br />更新日期
             </div>
           </div>
@@ -84,33 +88,33 @@ export default {
       attribution:
         'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       staticAnchor: [24, 32],
-      sourcetime:''
+      sourcetime: ""
     };
   },
   methods: {
     coordinate(xLat, yLng) {
       return [xLat, yLng];
     },
-    markinfo(item){
-        return `成人口罩:${item.adult_mask}<br/>
+    markinfo(item) {
+      return `成人口罩:${item.adult_mask}<br/>
                 兒童口罩:${item.child_mask}<br/>
                 地址:${item.address}<br/>
-                電話:${item.tel}<br/>`
+                電話:${item.tel}<br/>`;
     },
     map() {
       var vm = this;
       axios({
         method: "POST",
-        url: `http://172.16.5.17:3000/maskstock`,
+        url: `https://mask.digitvolunteer.space/maskstock`,
         responseType: "json",
         headers: {
           "Content-type": "application/json"
         }
       })
         .then(response => {
-            console.log(response.data)
+          console.log(response.data);
           vm.mapdata = response.data;
-          vm.sourcetime = response.data[0]["source_time"]
+          vm.sourcetime = response.data[0]["source_time"];
         })
         .catch(function(error) {
           console.log(error);
@@ -168,6 +172,11 @@ export default {
   font-weight: 800;
   font-size: 25px;
 }
+.cure span {
+  color: green;
+  font-weight: 800;
+  font-size: 25px;
+}
 .sickblock {
   height: 50px;
   position: relative;
@@ -196,6 +205,48 @@ export default {
   }
   .rightsick {
     width: 100%;
+  }
+  .check span {
+    color: red;
+    font-weight: 800;
+    font-size: 20px;
+  }
+  .death span {
+    color: gray;
+    font-weight: 800;
+    font-size: 20px;
+  }
+  .update span {
+    color: darkcyan;
+    font-weight: 800;
+    font-size: 20px;
+  }
+  .cure span {
+    color: green;
+    font-weight: 800;
+    font-size: 20px;
+  }
+  .sickblock {
+    height: 50px;
+    position: relative;
+    margin-left: 10px;
+  }
+  .sick {
+    height: 50px;
+    position: relative;
+    margin-left: 20px;
+    padding: 0px;
+  }
+  .check {
+    margin-left: 0px;
+  }
+  .sickblock::after {
+    content: "|";
+    position: absolute;
+    font-size: 20px;
+    top: 28%;
+    height: 50px;
+    margin-left: 10px;
   }
 }
 </style>
