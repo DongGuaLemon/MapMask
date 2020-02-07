@@ -3,17 +3,24 @@
     <alert />
     <div class="vue-leaflet">
       <div class="title">
-        <h2>(台東縣)實名制口罩存量地圖</h2>
-        <h5>口罩存量更新時間:{{sourcetime}}</h5>
+        <h2>{{ $t('title.titleh2')}}</h2>
+        <h5>{{ $t('title.titleh5')}}:{{sourcetime}}</h5>
+      </div>
+      <div class="lang">
+        <span v-bind:class="{ active: lang=='tw'}" @click="changlang('tw')">繁體中文</span> |
+        |
+        <span v-bind:class="{ active: lang=='cn'}" @click="changlang('cn')">简体中文</span> |
+        |
+        <span v-bind:class="{ active: lang=='en'}" @click="changlang('en')">English</span> |
+        |
+        <span v-bind:class="{ active: lang=='vn'}" @click="changlang('vn')">Tiếng việt</span> |
+        |
+        <span v-bind:class="{ active: lang=='pt'}" @click="changlang('pt')">ภาษาไทย</span>
       </div>
       <l-map style="width: 100%; height: 500px;z-index:10" :zoom="zoom" :center="center">
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
         <vmarkercluster>
-          <l-marker
-            v-for="(item,index) in mapdata"
-            :lat-lng="coordinate(item.lon,item.lat)"
-            :key="index"
-          >
+          <l-marker v-for="(item,index) in mapdata" :lat-lng="coordinate(item.lon,item.lat)" :key="index">
             <l-popup :content="markinfo(item)" />
             <l-icon :icon-anchor="staticAnchor" class-name="someExtraClass">
               <div style="width:50px">
@@ -26,27 +33,34 @@
       </l-map>
       <div class="footerblock">
         <div class="rightsick">
-          <h5>全國嚴重特殊傳染性肺炎本土病例及境外移入病例</h5>
+          <h5>{{ $t('footer.footertitle')}}</h5>
           <div class="sickmember">
             <div class="check sick sickblock">
-              <span>16</span>人
-              <br />確診
+              <span>16</span>
+              {{ $t('footer.footerunit')}}
+              <br />
+              {{ $t('footer.footercheck')}}
             </div>
             <div class="cure sick sickblock">
-              <span>1</span>人
-              <br />治癒
+              <span>1</span>
+              {{ $t('footer.footerunit')}}
+              <br />
+              {{ $t('footer.footercure')}}
             </div>
             <div class="death sick sickblock">
-              <span>0</span>人
-              <br />死亡
+              <span>0</span>
+              {{ $t('footer.footerunit')}}
+              <br />
+              {{ $t('footer.footerdeath')}}
             </div>
             <div class="update sick">
               <span>2020/02/06</span>
-              <br />更新日期
+              <br />
+              {{ $t('footer.footerupdate')}}
             </div>
           </div>
-          <p>
-            資料來源:
+          <p class="source">
+            {{$t('footer.footersource')}}:
             <a
               href="https://nidss.cdc.gov.tw/ch/Default.aspx"
             >https://nidss.cdc.gov.tw/ch/Default.aspx</a>
@@ -88,7 +102,8 @@ export default {
       attribution:
         'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       staticAnchor: [24, 32],
-      sourcetime: ""
+      sourcetime: "",
+      lang: 'tw'
     };
   },
   methods: {
@@ -96,10 +111,10 @@ export default {
       return [xLat, yLng];
     },
     markinfo(item) {
-      return `成人口罩:${item.adult_mask}<br/>
-                兒童口罩:${item.child_mask}<br/>
-                地址:${item.address}<br/>
-                電話:${item.tel}<br/>`;
+      return `${this.$t("mask.adultmask")}:${item.adult_mask}<br/>
+               ${this.$t("mask.childmask")}:${item.child_mask}<br/>
+               ${this.$t("mask.address")}:${item.address}<br/>
+               ${this.$t("mask.phone")}:${item.tel}<br/>`;
     },
     map() {
       var vm = this;
@@ -112,17 +127,21 @@ export default {
         }
       })
         .then(response => {
-          console.log(response.data);
           vm.mapdata = response.data;
           vm.sourcetime = response.data[0]["source_time"];
         })
         .catch(function(error) {
           console.log(error);
         });
+    },
+    changlang(lang){
+        this.$i18n.locale = lang;
+        this.lang=lang;
     }
   },
   created() {
     this.map();
+    this.$i18n.locale = "tw";
     var vm =this
     navigator.geolocation.watchPosition(function(position) {
       //console.log(position.coords.latitude, position.coords.longitude);
@@ -157,9 +176,21 @@ export default {
 .rightsick h5 {
   padding: 10px;
 }
+.lang {
+  width: 100%;
+  margin: 0 auto;
+}
+.lang span {
+  cursor: pointer;
+  font-weight: 800;
+}
+.active {
+  color: blue;
+}
 .sickmember {
   margin-top: -15px;
   display: flex;
+  justify-content: center;
   justify-content: center;
 }
 .check span {
@@ -242,6 +273,9 @@ export default {
     margin-left: 20px;
     padding: 0px;
   }
+  .sickmember{
+      margin-top: 2px;
+  }
   .check {
     margin-left: 0px;
   }
@@ -252,6 +286,12 @@ export default {
     top: 28%;
     height: 50px;
     margin-left: 10px;
+  }
+  .source{
+      margin-top: 15px;
+  }
+  .title h2{
+      font-size: 1.3em;
   }
 }
 </style>

@@ -3,6 +3,7 @@ import App from './App.vue'
 import vueRouter  from 'vue-router'
 import Routes from './route'
 import { Icon } from "leaflet";
+import i18n from "./lang/lang"
 import 'leaflet/dist/leaflet.css';
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
@@ -19,5 +20,6 @@ Icon.Default.mergeOptions({
 });
 new Vue({
   render: h => h(App),
-  router: router
+  router: router,
+  i18n
 }).$mount('#app')

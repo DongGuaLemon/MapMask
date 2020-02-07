@@ -1,0 +1,21 @@
+{
+    "title": {
+        "titleh2":"(Taitung) ฉันจะซื้อหน้ากากได้ที่ไหน",
+        "titleh5":"อัปเดตเวลา"
+    },
+    "footer":{
+        "footertitle":"ไวรัสโคโรนา การติดเชื้อ กรณี (ไต้หวัน)",
+        "footercheck":"การติดเชื้อ",
+        "footercure":"การรักษา",
+        "footerdeath":"ความตาย",
+        "footerupdate":"อัปเดตเวลา",
+        "footerunit":"",
+        "footersource":"ข้อมูลอ้างอิง"
+    },
+    "mask":{
+        "adultmask":"ผู้ใหญ่ มาสก์ ",
+        "childmask":"หน้ากากเด็ก",
+        "address":"ที่อยู่",
+        "phone":"โทรศัพท์"
+    }
+}
