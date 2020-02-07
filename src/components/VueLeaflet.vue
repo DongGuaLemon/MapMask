@@ -7,9 +7,15 @@
         <h5>{{ $t('title.titleh5')}}:{{sourcetime}}</h5>
       </div>
       <div class="lang">
-        <span v-bind:class="{ active: lang}" :style="lang" @click="chinese">中文版</span> |
+        <span v-bind:class="{ active: lang=='tw'}" @click="changlang('tw')">繁體中文</span> |
         |
-        <span v-bind:class="{ active: !lang}" :style="lang" @click="english">English</span>
+        <span v-bind:class="{ active: lang=='cn'}" @click="changlang('cn')">简体中文</span> |
+        |
+        <span v-bind:class="{ active: lang=='en'}" @click="changlang('en')">English</span> |
+        |
+        <span v-bind:class="{ active: lang=='vn'}" @click="changlang('vn')">Tiếng việt</span> |
+        |
+        <span v-bind:class="{ active: lang=='pt'}" @click="changlang('pt')">ภาษาไทย</span>
       </div>
       <l-map style="width: 100%; height: 500px;z-index:10" :zoom="zoom" :center="center">
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
@@ -53,7 +59,7 @@
               {{ $t('footer.footerupdate')}}
             </div>
           </div>
-          <p>
+          <p class="source">
             {{$t('footer.footersource')}}:
             <a
               href="https://nidss.cdc.gov.tw/ch/Default.aspx"
@@ -97,7 +103,7 @@ export default {
         'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       staticAnchor: [24, 32],
       sourcetime: "",
-      lang: true
+      lang: 'tw'
     };
   },
   methods: {
@@ -128,13 +134,9 @@ export default {
           console.log(error);
         });
     },
-    chinese() {
-      this.$i18n.locale = "tw";
-      this.lang = true;
-    },
-    english() {
-      this.$i18n.locale = "en";
-      this.lang = false;
+    changlang(lang){
+        this.$i18n.locale = lang;
+        this.lang=lang;
     }
   },
   created() {
@@ -170,7 +172,7 @@ export default {
   padding: 10px;
 }
 .lang {
-  width: 200px;
+  width: 100%;
   margin: 0 auto;
 }
 .lang span {
@@ -266,6 +268,9 @@ export default {
     margin-left: 20px;
     padding: 0px;
   }
+  .sickmember{
+      margin-top: 2px;
+  }
   .check {
     margin-left: 0px;
   }
@@ -276,6 +281,12 @@ export default {
     top: 28%;
     height: 50px;
     margin-left: 10px;
+  }
+  .source{
+      margin-top: 15px;
+  }
+  .title h2{
+      font-size: 1.3em;
   }
 }
 </style>

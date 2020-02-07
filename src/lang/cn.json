@@ -1,0 +1,22 @@
+{
+    "title": {
+        "titleh2":"(台东县)实名制口罩存量地图",
+        "titleh5":"口罩存量更新时间"
+    },
+    "footer":{
+        "footertitle":"全国严重特殊传染性肺炎本土病例及境外移入病例",
+        "footercheck":"确诊",
+        "footercure":"治癒",
+        "footerdeath":"死亡",
+        "footerupdate":"更新日期",
+        "footerunit":"人",
+        "footersource":"参考资料"
+    },
+    "mask":{
+        "adultmask":"成人口罩",
+        "childmask":"儿童口罩",
+        "address":"地址",
+        "phone":"电话"
+    }
+
+}

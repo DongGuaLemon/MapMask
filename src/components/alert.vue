@@ -3,7 +3,6 @@
     <div class="posterImg">
       <figcaption>
         <img :src="img" width="80%" alt="alert" />
-        <figure>隨意點擊離開(Click Exit)</figure>
       </figcaption>
     </div>
   </div>

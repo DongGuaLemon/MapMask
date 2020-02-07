@@ -1,0 +1,21 @@
+{
+    "title": {
+        "titleh2":"(Taitung) Mua khẩu trang Bản đồ",
+        "titleh5":"Thời gian cập nhật"
+    },
+    "footer":{
+        "footertitle":"Viêm phổi Vũ Hán trường hợp(Đài Loan)",
+        "footercheck":"Nhiễm trùng",
+        "footercure":"Chữa cho",
+        "footerdeath":"Tử thần",
+        "footerupdate":"Thời gian cập nhật",
+        "footerunit":"",
+        "footersource":"Tài liệu tham khảo"
+    },
+    "mask":{
+        "adultmask":"người lớn khẩu trang",
+        "childmask":"đứa trẻ khẩu trang",
+        "address":"Địa chỉ",
+        "phone":"Điện thoại"
+    }
+}
