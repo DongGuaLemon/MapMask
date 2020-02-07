@@ -123,6 +123,11 @@ export default {
   },
   created() {
     this.map();
+    var vm =this
+    navigator.geolocation.watchPosition(function(position) {
+      //console.log(position.coords.latitude, position.coords.longitude);
+      vm.center = L.latLng(position.coords.latitude,position.coords.longitude)
+    });
   }
 };
 </script>
