@@ -1,0 +1,22 @@
+{
+    "title": {
+        "titleh2":"(台東縣)實名制口罩存量地圖",
+        "titleh5":"口罩存量更新時間"
+    },
+    "footer":{
+        "footertitle":"全國嚴重特殊傳染性肺炎本土病例及境外移入病例",
+        "footercheck":"確診",
+        "footercure":"治癒",
+        "footerdeath":"死亡",
+        "footerupdate":"更新日期",
+        "footerunit":"人",
+        "footersource":"參考資料"
+    },
+    "mask":{
+        "adultmask":"成人口罩",
+        "childmask":"兒童口罩",
+        "address":"地址",
+        "phone":"電話"
+    }
+
+}

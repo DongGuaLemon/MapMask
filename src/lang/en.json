@@ -1,0 +1,22 @@
+{
+    "title": {
+        "titleh2":"(Taitung)Real-name Mask Stock Map",
+        "titleh5":"Stock of Masks UpdateTime"
+    },
+    "footer":{
+        "footertitle":"Coronavirus Case in local",
+        "footercheck":"Diagnose",
+        "footercure":"Cure",
+        "footerdeath":"Death",
+        "footerupdate":"UpdateTime",
+        "footerunit":"",
+        "footersource":"Reference"
+    },
+    "mask":{
+        "adultmask":"AdultMask",
+        "childmask":"ChildMask",
+        "address":"Address",
+        "phone":"Phone"
+    }
+
+}
